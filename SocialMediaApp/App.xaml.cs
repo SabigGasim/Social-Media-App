@@ -1,4 +1,6 @@
-﻿namespace SocialMediaApp;
+﻿using SocialMediaApp.MVVM.Views;
+
+namespace SocialMediaApp;
 
 public partial class App : Application
 {
