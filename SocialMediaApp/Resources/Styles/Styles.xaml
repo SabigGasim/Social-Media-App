@@ -17,17 +17,15 @@
         <Setter Property="Stroke" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray500}}" />
         <Setter Property="StrokeShape" Value="Rectangle"/>
         <Setter Property="StrokeThickness" Value="1"/>
+        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray950}}"/>
     </Style>
 
     <Style TargetType="BoxView">
         <Setter Property="Color" Value="{AppThemeBinding Light={StaticResource Gray300}, Dark={StaticResource Gray500}}" />
     </Style>
 
-    <Style TargetType="Button">
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
-        <Setter Property="BackgroundColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
+    <Style TargetType="Button" x:Key="BaseButton">
         <Setter Property="FontFamily" Value="OpenSansRegular"/>
-        <Setter Property="FontSize" Value="14"/>
         <Setter Property="CornerRadius" Value="8"/>
         <Setter Property="Padding" Value="14,10"/>
         <Setter Property="VisualStateManager.VisualStateGroups">
@@ -43,6 +41,32 @@
                 </VisualStateGroup>
             </VisualStateGroupList>
         </Setter>
+    </Style>
+
+    <Style TargetType="Button" x:Key="PrimaryButton" BasedOn="{StaticResource BaseButton}">
+        <Setter Property="BackgroundColor" Value="{StaticResource Primary}"/>
+        <Setter Property="TextColor" Value="{StaticResource White}"/>
+    </Style>
+
+    <Style TargetType="Button" x:Key="TransparentButton" BasedOn="{StaticResource BaseButton}">
+        <Setter Property="BackgroundColor" Value="{StaticResource FullyTransparent}"/>
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"/>
+    </Style>
+
+    <Style TargetType="Button" x:Key="PrimaryHeaderButton" BasedOn="{StaticResource PrimaryButton}">
+        <Setter Property="FontSize" Value="{StaticResource HeaderSize}"/>
+    </Style>
+    
+    <Style TargetType="Button" x:Key="PrimaryElementButton" BasedOn="{StaticResource PrimaryButton}">
+        <Setter Property="FontSize" Value="{StaticResource ElementSize}"/>
+    </Style>
+    
+    <Style TargetType="Button" x:Key="TransparentHeaderButton" BasedOn="{StaticResource TransparentButton}">
+        <Setter Property="FontSize" Value="{StaticResource HeaderSize}"/>
+    </Style>
+
+    <Style TargetType="Button" x:Key="TransparentElementButton" BasedOn="{StaticResource TransparentButton}">
+        <Setter Property="FontSize" Value="{StaticResource ElementSize}"/>
     </Style>
 
     <Style TargetType="CheckBox">
@@ -146,7 +170,7 @@
     </Style>
 
     <Style TargetType="Label" x:Key="BaseLabel">
-        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Primary}, Dark={StaticResource Primary}}" />
+        <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}" />
         <Setter Property="FontFamily" Value="OpenSansRegular" />
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
@@ -163,17 +187,17 @@
     </Style>
 
     <Style TargetType="Label" x:Key="HeaderLabel" BasedOn="{StaticResource BaseLabel}">
-        <Setter Property="FontSize" Value="26"/>
+        <Setter Property="FontSize" Value="{StaticResource HeaderSize}"/>
     </Style>
 
     <Style TargetType="Label" x:Key="ElementLabel" BasedOn="{StaticResource BaseLabel}">
-        <Setter Property="FontSize" Value="17"/>
+        <Setter Property="FontSize" Value="{StaticResource ElementSize}"/>
     </Style>
 
     <Style TargetType="Label" x:Key="CaptionLabel" BasedOn="{StaticResource BaseLabel}">
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontSize" Value="{StaticResource CaptionSize}"/>
     </Style>
-    
+
     <Style TargetType="ListView">
         <Setter Property="SeparatorColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray500}}" />
         <Setter Property="RefreshControlColor" Value="{AppThemeBinding Light={StaticResource Gray900}, Dark={StaticResource Gray200}}" />

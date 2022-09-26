@@ -1,0 +1,283 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xaml-comp compile="true" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                    xmlns:models="clr-namespace:SocialMediaApp.MVVM.Models"
+                    xmlns:converters="clr-namespace:SocialMediaApp.MVVM.ViewModels.Converters"
+                    xmlns:styles="clr-namespace:SocialMediaApp.Resources.Styles"
+                    xmlns:views="clr-namespace:SocialMediaApp.MVVM.Views">
+    <converters:WidthMinusPaddingConverter x:Key="widthMinusPaddingConverter"/>
+    <converters:DateTimeToStringConverter x:Key="dateTimeToStringConverter"/>
+    <!--<views:CustomDataTemplate x:Key="PostWithoutMediaDataTemplate" />-->
+    <DataTemplate x:Key="PostWithMediaDataTemplate"
+                  x:DataType="models:PostModel"
+                  >
+        <Border x:Name="PostBorder"
+                Margin="5"
+                StrokeShape="RoundRectangle 5"
+                StrokeThickness="0.4"
+                Padding="10"
+                >
+            <Grid x:Name="PostGrid"
+                  ColumnDefinitions="50,*,47" 
+                  RowDefinitions="22,Auto,300,20"
+                  RowSpacing="10"
+                  BackgroundColor="Transparent"
+                  >
+                <Label x:Name="MoreOptionsButton"
+                       Style="{StaticResource ElementLabel}"
+                       Text="⁝"
+                       FontAttributes="Bold"
+                       Grid.Row="0"
+                       Grid.Column="2"
+                       HorizontalTextAlignment="End"
+                       VerticalTextAlignment="Start"
+                       />
+                <Label x:Name="Username_PostDateLabel"
+                       Grid.Row="0"
+                       Grid.Column="1"
+                       Padding="10,0"
+                       LineBreakMode="MiddleTruncation"
+                       >
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding Nickname, Mode=OneTime}"
+                                  FontSize="{StaticResource ElementSize}"
+                                  FontAttributes="Bold"
+                                  TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"/>
+                            <Span FontSize="{StaticResource ElementSize}"
+                                  TextColor="{StaticResource Gray500}"
+                                  >
+                                <Span.Text>
+                                    <MultiBinding StringFormat="{} @{0} • {1}">
+                                        <Binding Path="Username" Mode="OneTime"/>
+                                        <Binding Path="Date" Mode="OneWay" Converter="{StaticResource dateTimeToStringConverter}"/>
+                                    </MultiBinding>
+                                </Span.Text>
+                            </Span>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <ImageButton x:Name="ProfileImageButton"
+                             Source="{Binding ProfilePic, Mode=OneTime}"
+                             Aspect="AspectFill"
+                             HeightRequest="50"
+                             Grid.Row="0"
+                             Grid.Column="0"
+                             Grid.RowSpan="2"
+                             CornerRadius="25"
+                             VerticalOptions="Start"/>
+                <Label x:Name="PostTextLabel" 
+                       Text="{Binding Text, Mode=OneTime}"
+                       Style="{StaticResource ElementLabel}"
+                       Margin="10,0,0,0"
+                       Grid.Row="1"
+                       Grid.Column="1"
+                       Grid.ColumnSpan="2"
+                       VerticalTextAlignment="Start"/>
+                <Border x:Name="PostImagesBorder"
+                        Grid.Row="2"
+                        Grid.ColumnSpan="3"
+                        StrokeShape="RoundRectangle 10"
+                        StrokeThickness="0"
+                        Padding="0"
+                        >
+                    <CarouselView x:Name="PostImagesCarouselView"
+                                  ItemsSource="{Binding Media, Mode=OneTime}"
+                                  Loop="False"
+                                  IndicatorView="{x:Reference PostImagesIndicatorView}"
+                                  >
+                            <CarouselView.ItemTemplate>
+                            <DataTemplate x:DataType="ImageSource">
+                                    <ImageButton x:Name="PostImageCarouselView"
+                                         Source="{Binding Mode=OneTime}"
+                                         Aspect="AspectFill"
+                                         />
+                                </DataTemplate>
+                            </CarouselView.ItemTemplate>
+                        </CarouselView>
+                </Border>
+                <IndicatorView x:Name="PostImagesIndicatorView"
+                               IndicatorColor="{StaticResource Gray400}"
+                               SelectedIndicatorColor="{StaticResource Primary}"
+                               Margin="0,0,0,15"
+                               VerticalOptions="End"
+                               HorizontalOptions="Center"
+                               Grid.Row="2"
+                               Grid.ColumnSpan="3"
+                               />
+                <ImageButton x:Name="CommentImageButton"
+                             Source="comment.png"
+                             WidthRequest="20"
+                             HeightRequest="20"
+                             VerticalOptions="Start"
+                             HorizontalOptions="Start"
+                             Grid.Row="3"
+                             Grid.ColumnSpan="3"
+                             Margin="5,0,0,0"
+                             />
+                
+                <Label x:Name="CommentsCountLabel"
+                       Style="{StaticResource ElementLabel}"
+                       Text="{Binding Comments.Count, Mode=OneWay}"
+                       Margin="30,0,0,0"
+                       Grid.Row="3"
+                       Grid.ColumnSpan="3"
+                       />
+
+                <ImageButton x:Name="ShareImageButton"
+                             Source="share.png"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Start"
+                             WidthRequest="20"
+                             HeightRequest="20"
+                             Grid.Row="3"
+                             Grid.ColumnSpan="3"
+                             />
+                <HorizontalStackLayout x:Name="LikeStackLayout"
+                                       Grid.Row="3"
+                                       Grid.ColumnSpan="3"
+                                       HorizontalOptions="End"
+                                       Margin="0,0,5,0"
+                                       >
+                    <ImageButton x:Name="LikeImageButton"
+                                 Source="like.png"
+                                 WidthRequest="20"
+                                 HeightRequest="20"
+                                 VerticalOptions="Start"
+                                 HorizontalOptions="Start"
+                                 />
+                    <Label x:Name="LikesCountLabel" 
+                           Style="{StaticResource ElementLabel}"
+                           Text="{Binding Likes, Mode=OneWay}"
+                           HorizontalTextAlignment="End"
+                           Margin="5,0,0,0"
+                           />
+                </HorizontalStackLayout>
+            </Grid>
+        </Border>
+    </DataTemplate>
+    <DataTemplate x:Key="PostWithoutMediaDataTemplate"
+                  x:DataType="models:PostModel"
+                  >
+        <Border x:Name="PostBorder"
+                Margin="5"
+                StrokeShape="RoundRectangle 5"
+                StrokeThickness="0.4"
+                Padding="10"
+                >
+            <Grid x:Name="PostGrid"
+                  ColumnDefinitions="50,*,47" 
+                  RowDefinitions="22,Auto,20"
+                  RowSpacing="10"
+                  BackgroundColor="Transparent"
+                  >
+                <Label x:Name="MoreOptionsButton"
+                       Style="{StaticResource ElementLabel}"
+                       Text="⁝"
+                       FontAttributes="Bold"
+                       Grid.Row="0"
+                       Grid.Column="2"
+                       HorizontalTextAlignment="End"
+                       VerticalTextAlignment="Start"
+                       />
+                <Label x:Name="Username_PostDateLabel"
+                       Grid.Row="0"
+                       Grid.Column="1"
+                       Padding="10,0"
+                       LineBreakMode="MiddleTruncation"
+                       >
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding Nickname, Mode=OneTime}"
+                                  FontSize="{StaticResource ElementSize}"
+                                  FontAttributes="Bold"
+                                  TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"/>
+                            <Span FontSize="{StaticResource ElementSize}"
+                                  TextColor="{StaticResource Gray500}"
+                                  >
+                                <Span.Text>
+                                    <MultiBinding StringFormat="{} @{0} • {1}">
+                                        <Binding Path="Username" Mode="OneTime"/>
+                                        <Binding Path="Date" Mode="OneWay" Converter="{StaticResource dateTimeToStringConverter}"/>
+                                    </MultiBinding>
+                                </Span.Text>
+                            </Span>
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                
+                <ImageButton x:Name="ProfileImageButton"
+                             Source="{Binding ProfilePic, Mode=OneTime}"
+                             Aspect="AspectFill"
+                             HeightRequest="50"
+                             Grid.Row="0"
+                             Grid.Column="0"
+                             Grid.RowSpan="2"
+                             CornerRadius="25"
+                             VerticalOptions="Start"/>
+                <Label x:Name="PostTextLabel" 
+                       Text="{Binding Text, Mode=OneTime}"
+                       Style="{StaticResource ElementLabel}"
+                       Margin="10,0,0,0"
+                       Grid.Row="1"
+                       Grid.Column="1"
+                       Grid.ColumnSpan="2"
+                       VerticalTextAlignment="Start"/>
+                
+                <ImageButton x:Name="CommentImageButton"
+                             Source="comment.png"
+                             WidthRequest="20"
+                             HeightRequest="20"
+                             VerticalOptions="Start"
+                             HorizontalOptions="Start"
+                             Grid.Row="2"
+                             Grid.ColumnSpan="3"
+                             Margin="5,0,0,0"
+                             />
+                <Label x:Name="CommentsCountLabel"
+                       Style="{StaticResource ElementLabel}"
+                       Text="{Binding Comments.Count, Mode=OneWay}"
+                       Margin="30,0,0,0"
+                       Grid.Row="2"
+                       Grid.ColumnSpan="3"
+                       />
+
+                <ImageButton x:Name="ShareImageButton"
+                             Source="share.png"
+                             HorizontalOptions="Center"
+                             VerticalOptions="Start"
+                             WidthRequest="20"
+                             HeightRequest="20"
+                             Grid.Row="2"
+                             Grid.ColumnSpan="3"
+                             />
+                <HorizontalStackLayout x:Name="LikeStackLayout"
+                                       Grid.Row="2"
+                                       Grid.ColumnSpan="3"
+                                       HorizontalOptions="End"
+                                       Margin="0,0,5,0"
+                                       >
+                    <ImageButton x:Name="LikeImageButton"
+                                 Source="like.png"
+                                 WidthRequest="20"
+                                 HeightRequest="20"
+                                 VerticalOptions="Start"
+                                 HorizontalOptions="Start"
+                                 />
+                    <Label x:Name="LikesCountLabel" 
+                           Style="{StaticResource ElementLabel}"
+                           Text="{Binding Likes, Mode=OneWay}"
+                           HorizontalTextAlignment="End"
+                           Margin="5,0,0,0"
+                           />
+                </HorizontalStackLayout>
+
+            </Grid>
+        </Border>
+    </DataTemplate>
+    <styles:PostDataTemplateSelector x:Key="PostDataTemplateSelector"
+                                     HasMediaDataTemplate="{StaticResource PostWithMediaDataTemplate}"
+                                     DoesntHaveMediaDataTemplate="{StaticResource PostWithoutMediaDataTemplate}"
+                                     />
+</ResourceDictionary>
