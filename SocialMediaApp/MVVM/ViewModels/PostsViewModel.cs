@@ -15,6 +15,6 @@ public class PostsViewModel : NotifyPropertyChanged
     public ObservableCollection<PostModel> Posts 
     {
         get => _posts;
-        set => SetValue(ref _posts, value);
+        set => TrySetValue(ref _posts, value);
     }
 }

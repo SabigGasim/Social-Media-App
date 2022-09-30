@@ -5,12 +5,30 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:SocialMediaApp"
     xmlns:views="clr-namespace:SocialMediaApp.MVVM.Views"
-    Shell.FlyoutBehavior="Disabled">
+    xmlns:viewmodels="clr-namespace:SocialMediaApp.MVVM.ViewModels"
+    Shell.FlyoutBehavior="Flyout">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate views:HomePage}"
-        Route="MainPage">
-    </ShellContent>
+    <Shell.SearchHandler>
+        <SearchHandler/>
+    </Shell.SearchHandler>
+    
+    <TabBar x:Name="ButtomTabBar">
+        <Tab  
+             Icon="home.png" Title="Home">
+            <ShellContent
+                ContentTemplate="{DataTemplate views:HomePage}"
+                Route="MainPage">
+            </ShellContent>
+        </Tab>
+        <Tab Icon="bell.png" Title="Notifications">
+            <ShellContent />
+        </Tab>
+        <Tab Icon="search.png" Title="Explore">
+            <ShellContent />
+        </Tab>
+        <Tab Icon="settings.png" Title="Settings">
+            <ShellContent ContentTemplate="{DataTemplate views:HomePage}"/>
+        </Tab>
+    </TabBar>
 
 </Shell>
