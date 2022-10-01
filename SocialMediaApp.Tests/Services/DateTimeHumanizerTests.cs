@@ -7,7 +7,9 @@ public class DateTimeHumanizerTests
 {
     private readonly IDateTimeHumanizerService _humanizer;
     private readonly IDateTimeProvider _dateTimeProvider;
+    private readonly IDateTimeProvider _dateTimeProviderMock = Substitute.For<IDateTimeProvider>();
 
+            
     public DateTimeHumanizerTests()
     {
         _humanizer = new DateTimeHumanizerService();
@@ -33,13 +35,10 @@ public class DateTimeHumanizerTests
     public void DateTimeHumanizerService_Humanize_ShouldReturn_30Seconds()
     {
         //Arrange
-
-        var dateTimeProviderMock = Substitute.For<IDateTimeProvider>();
-
-        dateTimeProviderMock.Now.Returns(DateTimeOffset.Now.AddSeconds(-30));
+        _dateTimeProviderMock.Now.Returns(DateTimeOffset.Now.AddSeconds(-30));
 
         //Act
-        var humanizedDatetime = _humanizer.Humanize(dateTimeProviderMock.Now);
+        var humanizedDatetime = _humanizer.Humanize(_dateTimeProviderMock.Now);
 
         //Assert
         humanizedDatetime.Should().Be("30 seconds");
@@ -61,13 +60,10 @@ public class DateTimeHumanizerTests
     public void DateTimeHumanizerService_Humanize_ShouldReturn_1year()
     {
         //Arrange
-
-        var dateTimeProviderMock = Substitute.For<IDateTimeProvider>();
-
-        dateTimeProviderMock.Now.Returns(DateTimeOffset.Now.AddYears(-1).AddDays(-2));
+        _dateTimeProviderMock.Now.Returns(DateTimeOffset.Now.AddYears(-1).AddDays(-2));
 
         //Act
-        var humanizedDatetime = _humanizer.Humanize(dateTimeProviderMock.Now);
+        var humanizedDatetime = _humanizer.Humanize(_dateTimeProviderMock.Now);
 
         //Assert
         humanizedDatetime.Should().Be("1 year");
@@ -77,13 +73,10 @@ public class DateTimeHumanizerTests
     public void DateTimeHumanizerService_Humanize_ShouldReturn_20years()
     {
         //Arrange
-
-        var dateTimeProviderMock = Substitute.For<IDateTimeProvider>();
-
-        dateTimeProviderMock.Now.Returns(DateTimeOffset.Now.AddYears(-20).AddSeconds(-10));
+        _dateTimeProviderMock.Now.Returns(DateTimeOffset.Now.AddYears(-20).AddSeconds(-10));
 
         //Act
-        var humanizedDatetime = _humanizer.Humanize(dateTimeProviderMock.Now);
+        var humanizedDatetime = _humanizer.Humanize(_dateTimeProviderMock.Now);
 
         //Assert
         humanizedDatetime.Should().Be("20 years");
@@ -93,12 +86,10 @@ public class DateTimeHumanizerTests
     public void DateTimeOffsetHumanizerService_Humanize_ShouldReturn_1hour()
     {
         //Arrange
-        var dateTimeProviderMock = Substitute.For<IDateTimeProvider>();
-
-        dateTimeProviderMock.Now.Returns(DateTime.Now.AddHours(-1).AddSeconds(-10));
+        _dateTimeProviderMock.Now.Returns(DateTime.Now.AddHours(-1).AddSeconds(-10));
 
         //Act
-        var humanizedDatetime = _humanizer.Humanize(dateTimeProviderMock.Now);
+        var humanizedDatetime = _humanizer.Humanize(_dateTimeProviderMock.Now);
 
         //Assert
         humanizedDatetime.Should().Be("1 hour");
@@ -108,13 +99,10 @@ public class DateTimeHumanizerTests
     public void DateTimeOffsetHumanizerService_Humanize_ShouldReturn_30Seconds()
     {
         //Arrange
-
-        var dateTimeProviderMock = Substitute.For<IDateTimeProvider>();
-
-        dateTimeProviderMock.Now.Returns(DateTime.Now.AddSeconds(-30));
+        _dateTimeProviderMock.Now.Returns(DateTime.Now.AddSeconds(-30));
 
         //Act
-        var humanizedDatetime = _humanizer.Humanize(dateTimeProviderMock.Now);
+        var humanizedDatetime = _humanizer.Humanize(_dateTimeProviderMock.Now);
 
         //Assert
         humanizedDatetime.Should().Be("30 seconds");
@@ -136,13 +124,10 @@ public class DateTimeHumanizerTests
     public void DateTimeOffsetHumanizerService_Humanize_ShouldReturn_1year()
     {
         //Arrange
-
-        var dateTimeProviderMock = Substitute.For<IDateTimeProvider>();
-
-        dateTimeProviderMock.Now.Returns(DateTime.Now.AddYears(-1).AddDays(-2));
+        _dateTimeProviderMock.Now.Returns(DateTime.Now.AddYears(-1).AddDays(-2));
 
         //Act
-        var humanizedDatetime = _humanizer.Humanize(dateTimeProviderMock.Now);
+        var humanizedDatetime = _humanizer.Humanize(_dateTimeProviderMock.Now);
 
         //Assert
         humanizedDatetime.Should().Be("1 year");
@@ -152,13 +137,10 @@ public class DateTimeHumanizerTests
     public void DateTimeOffsetHumanizerService_Humanize_ShouldReturn_20years()
     {
         //Arrange
-
-        var dateTimeProviderMock = Substitute.For<IDateTimeProvider>();
-
-        dateTimeProviderMock.Now.Returns(DateTime.Now.AddYears(-20).AddSeconds(-10));
+        _dateTimeProviderMock.Now.Returns(DateTime.Now.AddYears(-20).AddSeconds(-10));
 
         //Act
-        var humanizedDatetime = _humanizer.Humanize(dateTimeProviderMock.Now);
+        var humanizedDatetime = _humanizer.Humanize(_dateTimeProviderMock.Now);
 
         //Assert
         humanizedDatetime.Should().Be("20 years");
