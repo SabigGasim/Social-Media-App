@@ -2,7 +2,13 @@
 using System.Runtime.CompilerServices;
 
 namespace SocialMediaApp.MVVM.ViewModels;
-public class NotifyPropertyChanged : INotifyPropertyChanged
+
+public interface IPropertyChangedNotifier : INotifyPropertyChanged
+{
+    bool TrySetValue<T>(ref T property, T value, [CallerMemberName] string propertyName = null);
+}
+
+public class PropertyChangedNotifier : IPropertyChangedNotifier
 {
     public bool TrySetValue<T>(ref T property, T value, [CallerMemberName]string propertyName = null)
     {
