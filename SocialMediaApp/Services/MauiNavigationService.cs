@@ -19,7 +19,6 @@ public interface INavigationService
 public class MauiNavigationService : INavigationService
 {
     public Task InitializeAsync()
-
     {
         throw new NotImplementedException();
     }

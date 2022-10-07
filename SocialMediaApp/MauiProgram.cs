@@ -1,4 +1,5 @@
 ﻿using SocialMediaApp.MVVM.ViewModels;
+using SocialMediaApp.MVVM.ViewModels.Converters;
 using SocialMediaApp.MVVM.Views;
 using SocialMediaApp.Services;
 
@@ -17,11 +18,18 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
-		builder.Services.AddTransient<CommentsViewModel>();
-		builder.Services.AddTransient<CommentsPage>();
+		builder.Services
+			// services
+			.AddSingleton<INavigationService, MauiNavigationService>()
+			.AddSingleton<DateTimeToStringConverter>()
+			//view models
+			.AddTransient<CommentsViewModel>()
+			.AddTransient<PostsViewModel>()
+			//views
+			.AddSingleton<HomePage>()
+			.AddTransient<CommentsPage>();
 
-        DependencyService.RegisterSingleton<IDateTimeHumanizerService>(new DateTimeHumanizerService());
-        DependencyService.RegisterSingleton<INavigationService>(new MauiNavigationService());
+		DependencyService.RegisterSingleton<IDateTimeHumanizerService>(new DateTimeHumanizerService());
 
         return builder.Build();
 	}

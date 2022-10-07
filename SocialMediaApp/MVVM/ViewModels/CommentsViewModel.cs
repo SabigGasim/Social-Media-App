@@ -11,6 +11,11 @@ namespace SocialMediaApp.MVVM.ViewModels;
 [QueryProperty(nameof(Post), nameof(Post))]
 public class CommentsViewModel : ViewModelBase
 {
+    public CommentsViewModel(INavigationService navigationService) : base(navigationService)
+    {
+
+    }
+
     private PostModel _post = new();
 
     public PostModel Post

@@ -8,11 +8,9 @@ namespace SocialMediaApp.MVVM.Views;
 
 public partial class HomePage : ContentPage
 {
-	public HomePage()
+	public HomePage(PostsViewModel viewModel)
 	{
 		InitializeComponent();
-
-		var viewModel = new PostsViewModel();
 
 		var posts = GenerateFakePosts();
         viewModel.Posts = new ObservableCollection<PostModel>(posts);

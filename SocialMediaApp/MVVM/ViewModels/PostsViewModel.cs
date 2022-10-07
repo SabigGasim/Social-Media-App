@@ -14,7 +14,7 @@ public sealed class PostsViewModel : ViewModelBase
     private Command _commentsButtonClieckedCommand;
     private ObservableCollection<PostModel> _posts = new();
 
-    public PostsViewModel()
+    public PostsViewModel(INavigationService navigationService) : base(navigationService)
     {
         InitializeCommands();
     }

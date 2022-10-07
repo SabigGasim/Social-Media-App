@@ -5,8 +5,8 @@ public abstract class ViewModelBase : PropertyChangedNotifier
 {
 	protected readonly INavigationService _navigationService;
 
-	public ViewModelBase()
+	public ViewModelBase(INavigationService navigationService)
 	{
-		_navigationService = DependencyService.Get<INavigationService>();
-	}
+		_navigationService = navigationService;
+    }
 }
