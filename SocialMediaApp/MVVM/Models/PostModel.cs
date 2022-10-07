@@ -2,7 +2,7 @@
 
 namespace SocialMediaApp.MVVM.Models;
 
-public class PostModel
+public sealed class PostModel
 {
     private string _nickname;
     public string Nickname 

@@ -20,12 +20,11 @@ public class DateTimeHumanizerTests
     public void DateTimeHumanizerService_Humanize_ShouldReturn_1hour()
     {
         //Arrange
-        var dateTimeProviderMock = Substitute.For<IDateTimeProvider>();
 
-        dateTimeProviderMock.Now.Returns(DateTimeOffset.Now.AddHours(-1).AddSeconds(-10));
+        _dateTimeProviderMock.Now.Returns(DateTimeOffset.Now.AddHours(-1).AddSeconds(-10));
 
         //Act
-        var humanizedDatetime = _humanizer.Humanize(dateTimeProviderMock.Now);
+        var humanizedDatetime = _humanizer.Humanize(_dateTimeProviderMock.Now);
 
         //Assert
         humanizedDatetime.Should().Be("1 hour");

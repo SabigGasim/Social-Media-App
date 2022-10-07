@@ -5,10 +5,10 @@
                     xmlns:models="clr-namespace:SocialMediaApp.MVVM.Models"
                     xmlns:converters="clr-namespace:SocialMediaApp.MVVM.ViewModels.Converters"
                     xmlns:styles="clr-namespace:SocialMediaApp.Resources.Styles"
-                    xmlns:views="clr-namespace:SocialMediaApp.MVVM.Views">
+                    xmlns:views="clr-namespace:SocialMediaApp.MVVM.Views"
+                    xmlns:viewModels="clr-namespace:SocialMediaApp.MVVM.ViewModels">
     <converters:WidthMinusPaddingConverter x:Key="widthMinusPaddingConverter"/>
     <converters:DateTimeToStringConverter x:Key="dateTimeToStringConverter"/>
-    <!--<views:CustomDataTemplate x:Key="PostWithoutMediaDataTemplate" />-->
     <DataTemplate x:Key="PostWithMediaDataTemplate"
                   x:DataType="models:PostModel"
                   >
@@ -16,11 +16,11 @@
                 Margin="5"
                 StrokeShape="RoundRectangle 5"
                 StrokeThickness="0.4"
-                Padding="10"
+                Padding="{OnIdiom Default=10, Desktop=20}"
                 >
             <Grid x:Name="PostGrid"
                   ColumnDefinitions="50,*,47" 
-                  RowDefinitions="22,Auto,300,20"
+                  RowDefinitions="{OnIdiom Desktop='22,Auto,400,20', Tablet='22,Auto,600,20', Default='22,Auto,300,20'}"
                   RowSpacing="10"
                   BackgroundColor="Transparent"
                   >
@@ -115,6 +115,10 @@
                              Grid.Row="3"
                              Grid.ColumnSpan="3"
                              Margin="5,0,0,0"
+                             CommandParameter="{Binding}"
+                             Command="{Binding Source={RelativeSource Mode=FindAncestorBindingContext,
+                                               AncestorType={Type viewModels:PostsViewModel}},
+                                               Path=CommentsButtonClieckedCommand}"
                              />
                 
                 <Label x:Name="CommentsCountLabel"
@@ -224,7 +228,7 @@
                        Grid.Column="1"
                        Grid.ColumnSpan="2"
                        VerticalTextAlignment="Start"/>
-                
+
                 <ImageButton x:Name="CommentImageButton"
                              Source="comment.png"
                              WidthRequest="20"
@@ -234,7 +238,11 @@
                              Grid.Row="2"
                              Grid.ColumnSpan="3"
                              Margin="5,0,0,0"
-                             />
+                             CommandParameter="{Binding}"
+                             Command="{Binding Source={RelativeSource Mode=FindAncestorBindingContext,
+                                               AncestorType={Type viewModels:PostsViewModel}},
+                                               Path=CommentsButtonClieckedCommand}">
+                </ImageButton>
                 <Label x:Name="CommentsCountLabel"
                        Style="{StaticResource ElementLabel}"
                        Text="{Binding Comments.Count, Mode=OneWay}"

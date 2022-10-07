@@ -1,4 +1,8 @@
-﻿namespace SocialMediaApp;
+﻿using SocialMediaApp.MVVM.ViewModels;
+using SocialMediaApp.MVVM.Views;
+using SocialMediaApp.Services;
+
+namespace SocialMediaApp;
 
 public static class MauiProgram
 {
@@ -13,6 +17,12 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
-		return builder.Build();
+		builder.Services.AddTransient<CommentsViewModel>();
+		builder.Services.AddTransient<CommentsPage>();
+
+        DependencyService.RegisterSingleton<IDateTimeHumanizerService>(new DateTimeHumanizerService());
+        DependencyService.RegisterSingleton<INavigationService>(new MauiNavigationService());
+
+        return builder.Build();
 	}
 }

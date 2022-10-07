@@ -3,10 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewmodels="clr-namespace:SocialMediaApp.MVVM.ViewModels"
              x:Class="SocialMediaApp.MVVM.Views.HomePage"
-             Title="HomePage"
+             Title="not facebook"
              x:DataType="viewmodels:PostsViewModel"
              xmlns:converter="clr-namespace:SocialMediaApp.MVVM.ViewModels.Converters"
-             BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark={StaticResource Black}}">
+             BackgroundColor="{AppThemeBinding Light=WhiteSmoke, Dark={StaticResource Black}}"
+             Padding="{OnIdiom Desktop='300,0', Tablet='150,0'}">
     <CollectionView x:Name="PostsCollectionView"
                     ItemsSource="{Binding Posts}"
                     ItemTemplate="{StaticResource PostDataTemplateSelector}"

@@ -12,22 +12,30 @@
         <SearchHandler/>
     </Shell.SearchHandler>
     
-    <TabBar x:Name="ButtomTabBar">
-        <Tab  
-             Icon="home.png" Title="Home">
+    <TabBar x:Name="ButtomTabBar"
+            Route="main">
+        <Tab Icon="home.png"
+             Title="Home"
+             Route="home">
             <ShellContent
-                ContentTemplate="{DataTemplate views:HomePage}"
-                Route="MainPage">
+                Route="view"
+                ContentTemplate="{DataTemplate views:HomePage}">
             </ShellContent>
         </Tab>
-        <Tab Icon="bell.png" Title="Notifications">
+        <Tab Route="bell"
+             Icon="bell.png" 
+             Title="Notifications">
             <ShellContent />
         </Tab>
-        <Tab Icon="search.png" Title="Explore">
+        <Tab Route="search"
+             Icon="search.png" 
+             Title="Explore">
             <ShellContent />
         </Tab>
-        <Tab Icon="settings.png" Title="Settings">
-            <ShellContent ContentTemplate="{DataTemplate views:HomePage}"/>
+        <Tab Route="settings"
+             Icon="settings.png" 
+             Title="Settings">
+            <ShellContent/>
         </Tab>
     </TabBar>
 

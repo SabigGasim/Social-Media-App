@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31611.283
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialMediaApp", "SocialMediaApp\SocialMediaApp.csproj", "{F67CFF81-1E91-43B4-8C33-C4C577A4F824}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialMediaApp.Tests", "SocialMediaApp.Tests\SocialMediaApp.Tests.csproj", "{EEA3FD18-C5DF-4CA1-88A9-9314E4666817}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialMediaApp.Tests", "SocialMediaApp.Tests\SocialMediaApp.Tests.csproj", "{EEA3FD18-C5DF-4CA1-88A9-9314E4666817}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

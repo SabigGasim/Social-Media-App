@@ -8,10 +8,7 @@ public partial class App : Application
 {
 	public App()
 	{
-		DependencyService.RegisterSingleton<DateTimeHumanizerService>(new());
-		
 		InitializeComponent();
-
 
         MainPage = new AppShell();
 	}

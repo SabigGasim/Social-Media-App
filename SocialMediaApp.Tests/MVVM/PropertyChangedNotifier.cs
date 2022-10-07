@@ -2,11 +2,11 @@
 using SocialMediaApp.MVVM.ViewModels;
 
 namespace SocialMediaApp.Tests.MVVM;
-public class NotifyPropertyChanged
+public class PropertyChangedNotifierTests
 {
     private readonly IPropertyChangedNotifier _notifier;
 
-    public NotifyPropertyChanged()
+    public PropertyChangedNotifierTests()
     {
         _notifier = new PropertyChangedNotifier();
     }
