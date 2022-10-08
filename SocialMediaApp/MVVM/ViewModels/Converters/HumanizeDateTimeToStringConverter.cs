@@ -7,16 +7,16 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SocialMediaApp.MVVM.ViewModels.Converters;
-public class DateTimeToStringConverter : IValueConverter
+public class HumanizeDateTimeToStringConverter : IValueConverter
 {
-    private readonly IDateTimeHumanizerService _dateTimeHumanizerService;
+    private readonly IHumanizerService _dateTimeHumanizerService;
 
-    public DateTimeToStringConverter()
+    public HumanizeDateTimeToStringConverter()
     {
-        _dateTimeHumanizerService = DependencyService.Get<IDateTimeHumanizerService>();
+        _dateTimeHumanizerService = DependencyService.Get<IHumanizerService>();
     }
 
-    public DateTimeToStringConverter(IDateTimeHumanizerService dateTimeHumanizerService)
+    public HumanizeDateTimeToStringConverter(IHumanizerService dateTimeHumanizerService)
     {
         _dateTimeHumanizerService = dateTimeHumanizerService;
     }

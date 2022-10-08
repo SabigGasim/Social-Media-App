@@ -9,7 +9,7 @@ public class DateTimeToStringConverterTests
 
 	public DateTimeToStringConverterTests()
 	{
-		_dateTimeToStringConverter = new DateTimeToStringConverter(new DateTimeHumanizerService());
+		_dateTimeToStringConverter = new HumanizeDateTimeToStringConverter(new HumanizerService());
     }
 
 	[Fact]
