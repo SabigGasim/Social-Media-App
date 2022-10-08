@@ -2,9 +2,16 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:viewModels="clr-namespace:SocialMediaApp.MVVM.ViewModels"
+             xmlns:models="clr-namespace:SocialMediaApp.MVVM.Models"
              x:Class="SocialMediaApp.MVVM.Views.CommentsPage"
              Title="CommentsPage"
              x:DataType="viewModels:CommentsViewModel">
-    <CollectionView BindingContext="{Binding Post}"
-                    ItemTemplate="{StaticResource PostDataTemplateSelector}"/>
+    <CollectionView x:Name="CommentsCollectionView"
+                    ItemTemplate="{StaticResource CommentsDataTemplate}"
+                    ItemsSource="{Binding Post.Comments}"
+                    Header="{Binding Post}"
+                    HeaderTemplate="{StaticResource ReplyingToPostDataTemplateSelector}"
+                    Grid.Row="1"
+                    >
+    </CollectionView>
 </ContentPage>

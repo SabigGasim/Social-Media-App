@@ -21,7 +21,6 @@ public partial class HomePage : ContentPage
 	private static IEnumerable<PostModel> GenerateFakePosts()
 	{
 		var randomizer = new Random();
-		var postCommentsLength = randomizer.Next(3, 20);
 
         var postFaker = new Faker<PostModel>()
 			.RuleFor(post => post.Nickname, f => f.Name.FullName())
@@ -31,13 +30,27 @@ public partial class HomePage : ContentPage
 			{
 				var imageUrl = f.Image.LoremFlickrUrl(200, 200);
                 return new Uri(imageUrl);
-            });
+            })
+            .RuleFor(post => post.Likes, () => randomizer.Next(1_000_000_000));
 
-		var posts = postFaker.GenerateBetween(30, 100);
+        var posts = postFaker.GenerateBetween(30, 100);
 
-		posts.ForEach(post => post.Comments = new(new Faker<Comment>()
-            .RuleFor(comment => comment.Text, f => f.Lorem.Text())
-            .Generate(postCommentsLength)));
+		posts.ForEach(post =>
+		{
+			var fakeProfilePic = new Faker<ProfileModel>()
+				.RuleFor(profile => profile.Icon, f => f.Image.LoremFlickrUrl(1920, 1080));
+
+			var fakeUser = new Faker<UserModel>()
+				.RuleFor(comment => comment.Nickname, f => f.Name.FullName())
+				.RuleFor(comment => comment.Profile, () => fakeProfilePic);
+
+			post.Comments = new(new Faker<CommentModel>()
+				.RuleFor(comment => comment.Text, f => f.Lorem.Text())
+				.RuleFor(comment => comment.User, () => fakeUser)
+				.RuleFor(comment => comment.Date, f => f.Date.Between(DateTime.Now.AddYears(-5), DateTime.Now))
+                .RuleFor(comment => comment.Likes, () => randomizer.Next(1_000_000_000))
+                .Generate(randomizer.Next(3, 20)));
+		});
 
 		posts.ForEach(post =>
 		{

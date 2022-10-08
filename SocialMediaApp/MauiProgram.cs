@@ -21,7 +21,7 @@ public static class MauiProgram
 		builder.Services
 			// services
 			.AddSingleton<INavigationService, MauiNavigationService>()
-			.AddSingleton<DateTimeToStringConverter>()
+			.AddSingleton<HumanizeDateTimeToStringConverter>()
 			//view models
 			.AddTransient<CommentsViewModel>()
 			.AddTransient<PostsViewModel>()
@@ -29,7 +29,7 @@ public static class MauiProgram
 			.AddSingleton<HomePage>()
 			.AddTransient<CommentsPage>();
 
-		DependencyService.RegisterSingleton<IDateTimeHumanizerService>(new DateTimeHumanizerService());
+		DependencyService.RegisterSingleton<IHumanizerService>(new HumanizerService());
 
         return builder.Build();
 	}
