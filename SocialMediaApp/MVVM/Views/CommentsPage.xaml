@@ -4,8 +4,8 @@
              xmlns:viewModels="clr-namespace:SocialMediaApp.MVVM.ViewModels"
              xmlns:models="clr-namespace:SocialMediaApp.MVVM.Models"
              x:Class="SocialMediaApp.MVVM.Views.CommentsPage"
-             Title="CommentsPage"
-             x:DataType="viewModels:CommentsViewModel">
+             Title="Comments"
+             x:DataType="viewModels:CommentsViewModel"> 
     <CollectionView x:Name="CommentsCollectionView"
                     ItemTemplate="{StaticResource CommentsDataTemplate}"
                     ItemsSource="{Binding Post.Comments}"

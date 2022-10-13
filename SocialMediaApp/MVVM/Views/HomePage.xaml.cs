@@ -44,11 +44,19 @@ public partial class HomePage : ContentPage
 				.RuleFor(comment => comment.Nickname, f => f.Name.FullName())
 				.RuleFor(comment => comment.Profile, () => fakeProfilePic);
 
+			var fakeReply = new Faker<ReplyModel>()
+				.RuleFor(reply => reply.User, () => fakeUser)
+				.RuleFor(reply => reply.Text, f => f.Lorem.Text())
+				.RuleFor(reply => reply.Likes, () => randomizer.Next(10_000))
+                .RuleFor(reply => reply.Id, Guid.NewGuid())
+				.RuleFor(reply => reply.Date, f => f.Date.Past(3));
+
 			post.Comments = new(new Faker<CommentModel>()
 				.RuleFor(comment => comment.Text, f => f.Lorem.Text())
 				.RuleFor(comment => comment.User, () => fakeUser)
 				.RuleFor(comment => comment.Date, f => f.Date.Between(DateTime.Now.AddYears(-5), DateTime.Now))
                 .RuleFor(comment => comment.Likes, () => randomizer.Next(1_000_000_000))
+				.RuleFor(comment => comment.Replies, () => new(fakeReply.Generate(randomizer.Next(0, 10))))
                 .Generate(randomizer.Next(3, 20)));
 		});
 
@@ -66,6 +74,14 @@ public partial class HomePage : ContentPage
 
                 post.Media.Add(imageSource);
             }
+
+			foreach(var comment in post.Comments)
+			{
+				foreach(var reply in comment.Replies)
+				{
+					reply.Comment = comment;
+				}
+			}
 		});
 
 		return posts;

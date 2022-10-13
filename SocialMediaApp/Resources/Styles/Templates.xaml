@@ -10,6 +10,109 @@
     <converters:WidthMinusPaddingConverter x:Key="widthMinusPaddingConverter"/>
     <converters:HumanizeDateTimeToStringConverter x:Key="humanizeDateTimeToStringConverter"/>
     <converters:HumanizeIntToStringConverter x:Key="humanizeIntToStringConverter"/>
+    <DataTemplate x:Key="RepliesDataTemplate"
+                  x:DataType="models:ReplyModel">
+        <Grid x:Name="CommentGrid"
+              ColumnDefinitions="50,*,47" 
+              RowDefinitions="20,10,Auto,20"
+              RowSpacing="10"
+              BackgroundColor="Transparent"
+              Padding="10"
+              >
+            <Label x:Name="MoreOptionsButton"
+                       Style="{StaticResource ElementLabel}"
+                       Text="⁝"
+                       FontAttributes="Bold"
+                       Grid.Row="0"
+                       Grid.Column="2"
+                       HorizontalTextAlignment="End"
+                       VerticalTextAlignment="Start"
+                       />
+            <Label x:Name="Username_CommentDateLabel"
+                   Grid.Row="0"
+                   Grid.Column="1"
+                   Padding="10,0"
+                   LineBreakMode="MiddleTruncation">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding User.Nickname, Mode=OneTime}"
+                                  FontSize="{StaticResource ElementSize}"
+                                  FontAttributes="Bold"
+                                  TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"/>
+                        <Span FontSize="{StaticResource ElementSize}"
+                                  TextColor="{StaticResource Gray500}"
+                                  >
+                            <Span.Text>
+                                <MultiBinding StringFormat="{} @{0} • {1}">
+                                    <Binding Path="User.Username" Mode="OneTime"/>
+                                    <Binding Path="Date" Mode="OneWay" Converter="{StaticResource humanizeDateTimeToStringConverter}"/>
+                                </MultiBinding>
+                            </Span.Text>
+                        </Span>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+            <Label x:Name="ReplyingToUserLabel"
+                   Grid.Row="0"
+                   Grid.Column="1"
+                   Grid.RowSpan="2"
+                   VerticalOptions="End"
+                   Padding="10,0"
+                   LineBreakMode="MiddleTruncation">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Replying to " FontSize="{StaticResource ElementSize}"
+                              TextColor="{StaticResource Gray500}"
+                              />
+                        <Span Text="{Binding Comment.User.Username, StringFormat='@{0}'}"
+                              FontSize="{StaticResource ElementSize}"
+                              TextColor="{StaticResource Primary}"
+                              />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <!--Source="{Binding User.Profile.Icon, Mode=OneTime}"-->
+            <ImageButton x:Name="ProfileImageButton"
+                         Source="{Binding User.Profile.Icon}"
+                             Aspect="AspectFill"
+                             HeightRequest="50"
+                             Grid.Row="0"
+                             Grid.Column="0"
+                             Grid.RowSpan="3"
+                             CornerRadius="25"
+                             VerticalOptions="Start"/>
+            <Label x:Name="CommentTextLabel" 
+                       Text="{Binding Text, Mode=OneTime}"
+                       Style="{StaticResource ElementLabel}"
+                       Margin="10,0,0,0"
+                       Grid.Row="2"
+                       Grid.Column="1"
+                       Grid.ColumnSpan="2"
+                       VerticalTextAlignment="Start"/>
+            <HorizontalStackLayout x:Name="LikeStackLayout"
+                                   Grid.Row="3"
+                                   Grid.ColumnSpan="2"
+                                   Grid.Column="1"
+                                   HorizontalOptions="Start"
+                                   Margin="10,0,5,0"
+                                   >
+                <ImageButton x:Name="LikeImageButton"
+                                 Source="like.png"
+                                 WidthRequest="20"
+                                 HeightRequest="20"
+                                 VerticalOptions="Start"
+                                 HorizontalOptions="Start"
+                                 />
+                <Label x:Name="LikesCountLabel" 
+                           Style="{StaticResource ElementLabel}"
+                           Text="{Binding Likes, Mode=OneWay, Converter={StaticResource humanizeIntToStringConverter}}"
+                           HorizontalTextAlignment="End"
+                           Margin="5,0,0,0"
+                           />
+            </HorizontalStackLayout>
+        </Grid>
+    </DataTemplate>
     <DataTemplate x:Key="CommentsDataTemplate"
                   x:DataType="models:CommentModel">
         <Grid x:Name="CommentGrid"
@@ -82,14 +185,18 @@
                          Grid.Row="2"
                          Grid.ColumnSpan="2"
                          Grid.Column="1"
-                         Margin="5,0,0,0"/>
+                         Margin="5,0,0,0"
+                         Command="{Binding ReplyButtonClickedCommand,
+                                           Source={RelativeSource Mode=FindAncestorBindingContext,
+                                           AncestorType={x:Type viewModels:CommentsViewModel}}}"
+                         CommandParameter="{Binding}"/>
             <Label x:Name="RepliesCountLabel"
-                       Style="{StaticResource ElementLabel}"
-                       Text="{Binding Replies.Count, Mode=OneWay, Converter={StaticResource humanizeIntToStringConverter}}"
-                       Margin="30,0,0,0"
-                       Grid.Row="2"
-                       Grid.ColumnSpan="3"
-                       />
+                   Style="{StaticResource ElementLabel}"
+                   Text="{Binding Replies.Count, Mode=OneWay, Converter={StaticResource humanizeIntToStringConverter}}"
+                   Margin="30,0,0,0"
+                   Grid.Row="2"
+                   Grid.Column="1"
+                   />
             <HorizontalStackLayout x:Name="LikeStackLayout"
                                        Grid.Row="2"
                                        Grid.ColumnSpan="3"
@@ -387,6 +494,101 @@
             </Grid>
         </Border>
     </DataTemplate>
+    <DataTemplate x:Key="ReplyingToCommentDataTemplate"
+                  x:DataType="models:CommentModel"
+                  >
+        <Grid x:Name="PostGrid"
+              ColumnDefinitions="50,*,47" 
+              RowDefinitions="22,Auto,20"
+              RowSpacing="10"
+              BackgroundColor="{StaticResource Gray950}"
+              Padding="10"
+              >
+            <Label x:Name="MoreOptionsButton"
+                       Style="{StaticResource ElementLabel}"
+                       Text="⁝"
+                       FontAttributes="Bold"
+                       Grid.Row="0"
+                       Grid.Column="2"
+                       HorizontalTextAlignment="End"
+                       VerticalTextAlignment="Start"
+                       />
+            <Label x:Name="Username_PostDateLabel"
+                       Grid.Row="0"
+                       Grid.Column="1"
+                       Padding="10,0"
+                       LineBreakMode="MiddleTruncation"
+                       >
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="{Binding User.Nickname, Mode=OneTime}"
+                                  FontSize="{StaticResource ElementSize}"
+                                  FontAttributes="Bold"
+                                  TextColor="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource White}}"/>
+                        <Span FontSize="{StaticResource ElementSize}"
+                                  TextColor="{StaticResource Gray500}"
+                                  >
+                            <Span.Text>
+                                <MultiBinding StringFormat="{} @{0} • {1}">
+                                    <Binding Path="User.Username" Mode="OneTime"/>
+                                    <Binding Path="Date" Mode="OneWay" Converter="{StaticResource humanizeDateTimeToStringConverter}"/>
+                                </MultiBinding>
+                            </Span.Text>
+                        </Span>
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <ImageButton x:Name="ProfileImageButton"
+                             Source="{Binding User.Profile.Icon, Mode=OneTime}"
+                             Aspect="AspectFill"
+                             HeightRequest="50"
+                             Grid.Row="0"
+                             Grid.Column="0"
+                             Grid.RowSpan="2"
+                             CornerRadius="25"
+                             VerticalOptions="Start"/>
+            <Label x:Name="PostTextLabel" 
+                       Text="{Binding Text, Mode=OneTime}"
+                       Style="{StaticResource ElementLabel}"
+                       Margin="10,0,0,0"
+                       Grid.Row="1"
+                       Grid.Column="1"
+                       Grid.ColumnSpan="2"
+                       VerticalTextAlignment="Start"/>
+
+            <ImageButton x:Name="ShareImageButton"
+                             Source="share.png"
+                             HorizontalOptions="Start"
+                             VerticalOptions="Start"
+                             WidthRequest="20"
+                             HeightRequest="20"
+                             Grid.Row="2"
+                             Grid.ColumnSpan="3"
+                             />
+            <HorizontalStackLayout x:Name="LikeStackLayout"
+                                       Grid.Row="2"
+                                       Grid.ColumnSpan="3"
+                                       HorizontalOptions="End"
+                                       Margin="0,0,5,0"
+                                       >
+                <ImageButton x:Name="LikeImageButton"
+                                 Source="like.png"
+                                 WidthRequest="20"
+                                 HeightRequest="20"
+                                 VerticalOptions="Start"
+                                 HorizontalOptions="Start"
+                                 />
+                <Label x:Name="LikesCountLabel" 
+                           Style="{StaticResource ElementLabel}"
+                           Text="{Binding Likes, Mode=OneWay, Converter={StaticResource humanizeIntToStringConverter}}"
+                           HorizontalTextAlignment="End"
+                           Margin="5,0,0,0"
+                           />
+            </HorizontalStackLayout>
+
+        </Grid>
+    </DataTemplate>
     <DataTemplate x:Key="ReplyingToPostWithMediaDataTemplate"
                   x:DataType="models:PostModel"
                   >
@@ -511,7 +713,7 @@
             </HorizontalStackLayout>
         </Grid>
     </DataTemplate>
-    <DataTemplate x:Key="ReplyigToPostWithoutMediaDataTemplate"
+    <DataTemplate x:Key="ReplyingToPostWithoutMediaDataTemplate"
                   x:DataType="models:PostModel"
                   >
         <Grid x:Name="PostGrid"
@@ -612,6 +814,6 @@
                                      />
     <styles:PostDataTemplateSelector x:Key="ReplyingToPostDataTemplateSelector"
                                      HasMediaDataTemplate="{StaticResource ReplyingToPostWithMediaDataTemplate}"
-                                     DoesntHaveMediaDataTemplate="{StaticResource ReplyigToPostWithoutMediaDataTemplate}"
+                                     DoesntHaveMediaDataTemplate="{StaticResource ReplyingToPostWithoutMediaDataTemplate}"
                                      />
 </ResourceDictionary>

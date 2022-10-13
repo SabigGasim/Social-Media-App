@@ -10,5 +10,6 @@ public partial class AppShell : Shell
 		InitializeComponent();
 
 		Routing.RegisterRoute("comments", typeof(CommentsPage));
+		Routing.RegisterRoute("replies", typeof(RepliesPage));
 	}
 }

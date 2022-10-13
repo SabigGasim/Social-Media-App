@@ -25,9 +25,11 @@ public static class MauiProgram
 			//view models
 			.AddTransient<CommentsViewModel>()
 			.AddTransient<PostsViewModel>()
+			.AddTransient<RepliesViewModel>()
 			//views
 			.AddSingleton<HomePage>()
-			.AddTransient<CommentsPage>();
+			.AddTransient<CommentsPage>()	
+			.AddTransient<RepliesPage>();
 
 		DependencyService.RegisterSingleton<IHumanizerService>(new HumanizerService());
 
